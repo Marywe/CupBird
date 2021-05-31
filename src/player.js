@@ -1,68 +1,116 @@
 
-var player = {
-    x: 0,
-    y: 0,
-    width: 40,
-    height: 40,
-    rotation: 0,
+class Player extends GameObject {
 
-    halfWidth: 0,
-    halfHeight: 0,
+    constructor(position, rotation)
+    {
+        super(position, rotation);
 
-    speed: 400,
+        this.maxLife = 100;
+        this.life = 100;
 
-    start: function() {
-        this.halfWidth = this.width / 2;
-        this.halfHeight = this.height / 2;
+        //this.sprite = new Sprite(graphicAssets.braid.image, new Vector2(graphicAssets.braid.image.width / 2, graphicAssets.braid.image.height / 2));
 
-        this.x = canvas.width / 2;
-        this.y = canvas.height / 2;
-    },
+        //idle
+        //this.animation = new SSAnimation(graphicAssets.braid.image, 83, 140, [12, 11, 9, 9, 8], 1 / 12);
+        this.animation = new SSAnimation(
+            graphicAssets.knight.image,
+            79, // frameWidth
+            63, // frameHeight
+            [14, 13, 14, 10, 2, 5, 6, 4, 4, 6, 4, 2, 8], // frameCount
+            1/12
+        );
+        this.animation.PlayAnimationLoop(12);
 
-    update: function(deltaTime) {
-        // movement
-        let dir = { x: 0, y: 0 };
+        // physic body
+        this.body = null;
 
+        // force movement
+        this.forceMovement = 50;
+
+        // maximun displacement velocity
+        this.maxVelocity = 2.5;
+
+        // movement flags
+        this.movingLeft = false;
+    }
+
+    Start(scene)
+    {
+        super.Start(scene);
+
+        this.body = CreateBox(world, this.position.x / scale, this.position.y / scale, 0.6, 0.8, {fixedRotation: true, restitution: 0});
+    }
+
+    Update(deltaTime)
+    {
+        super.Update(deltaTime);
+
+        // update the animation
+        this.animation.Update(deltaTime);
+
+        // left-right movement
         if (Input.IsKeyPressed(KEY_LEFT) || Input.IsKeyPressed(KEY_A))
-            dir.x = -1;
+        {
+            this.body.ApplyForce(new b2Vec2(-this.forceMovement, 0), new b2Vec2(0, 0));
+        }
         if (Input.IsKeyPressed(KEY_RIGHT) || Input.IsKeyPressed(KEY_D))
-            dir.x = 1;
-        if (Input.IsKeyPressed(KEY_UP) || Input.IsKeyPressed(KEY_W))
-            dir.y = -1;
-        if (Input.IsKeyPressed(KEY_DOWN) || Input.IsKeyPressed(KEY_S))
-            dir.y = 1;
-
-        if(dir.x!= 0 && dir.y != 0)
         {
-            dir.x = dir.x / Math.sqrt(2);
-            dir.y = dir.y / Math.sqrt(2);
+            this.body.ApplyForce(new b2Vec2(this.forceMovement, 0), new b2Vec2(0, 0));
         }
-            
-    
-        this.x += dir.x * this.speed * deltaTime;
-        this.y += dir.y * this.speed * deltaTime;
 
-        //this.x = (this.x < this.halfWidth) ? this.halfWidth : (this.x > canvas.width - this.halfWidth) ? canvas.width - this.halfWidth : this.x;
+        // movement velocity cap
+        let movement = this.body.GetLinearVelocity();
+        if (movement.x > this.maxVelocity)
+            this.body.SetLinearVelocity(new b2Vec2(this.maxVelocity, movement.y));
+        else if (movement.x < -this.maxVelocity)
+            this.body.SetLinearVelocity(new b2Vec2(-this.maxVelocity, movement.y));
 
-        if (this.x < this.halfWidth)
-            this.x = this.halfWidth;
-        else
-        {
-            let maxX = canvas.width - this.halfWidth;
-            if (this.x > maxX)
-                this.x = maxX;
-        }
-    },
+        if (this.movingLeft && movement.x > 0)
+            this.movingLeft = false;
+        else if (!this.movingLeft && movement.x < 0)
+            this.movingLeft = true;
 
-    draw: function(ctx) {
+        // update the position
+        let bodyPosition = this.body.GetPosition();
+        this.position.x = bodyPosition.x * scale;
+        this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
+
+        // make the player lose life because of yes
+        //this.life -= 1.25; 
+
+        if (this.life <= 0.0)
+            this.scene.PlayerHasDie();
+    }
+
+    Draw(ctx)
+    {
+        // remove the image filtering
+        ctx.imageSmoothingEnabled = false;
+
         ctx.save();
 
-        ctx.translate(this.x, this.y);
+        if (this.movingLeft)
+        {
+            ctx.translate(this.position.x -10, this.position.y - 16);
+            ctx.scale(-3, 3);
+        }
+        else
+        {
+            ctx.translate(this.position.x + 30, this.position.y - 16);
+            ctx.scale(3, 3);
+        }
         ctx.rotate(this.rotation);
 
-        ctx.fillStyle = "red";
-        ctx.fillRect(-this.halfWidth, -this.halfHeight, this.width, this.height);
+        //this.sprite.Draw(ctx);
+        this.animation.Draw(ctx);
 
         ctx.restore();
+
+        ctx.imageSmoothingEnabled = true;
+    }
+
+    GetActualProportionalLife()
+    {
+        return this.life / this.maxLife;
     }
 }
