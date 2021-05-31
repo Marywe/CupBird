@@ -13,8 +13,8 @@ body {
     background-color: white;
     position: relative;
     margin: 20px auto;
-    width: 640px;
-    height: 480px;
+    width: 1000px;
+    height: 600px;
     overflow: hidden;
 }
 
@@ -73,7 +73,7 @@ body {
 }
 
 #credits > div {
-    transform: rotateX(11deg) translate3d(0px, -1400px, 118px);
+    transform: rotateX(11deg) translate3d(0px, -400px, 118px);
 }
 
 #credits p {
@@ -81,11 +81,11 @@ body {
 }
 
 .creditsAnimation {
-    animation: creditsRoll 5s linear 0s 1 normal;
+    animation: creditsRoll 8s linear 0s 0.75 normal;
     animation-fill-mode: backwards;
 }
 
 @keyframes creditsRoll {
-    0% { transform: rotateX(11deg) translate3d(0px, 500px, 118px) };
-    100% { transform: rotateX(11deg) translate3d(0px, -1400px, 118px) }
+    0% { transform: rotateX(11deg) translate3d(0px, 200px, 118px) };
+    100% { transform: rotateX(11deg) translate3d(0px, -100px, 118px) }
 }

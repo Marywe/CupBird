@@ -147,7 +147,7 @@ function Start()
 {
     // Start the game
     // prepare the first scene
-    currentScene = new Scene2();
+    currentScene = new GameScene();
     currentScene.Start();
 
     currentState = EngineState.Game;

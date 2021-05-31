@@ -1,5 +1,5 @@
 
-class Scene1 extends Scene {
+class GameScene extends Scene {
 
     constructor()
     {
@@ -13,15 +13,13 @@ class Scene1 extends Scene {
         this.world = null;
 
         // reference to the ingame UI
-        this.ui = new ingameUI();
+        this.ui = new ingameUI2();
 
         // background
         this.background = new Background();
 
-        // you died image
-        this.diedSprite = new Sprite(graphicAssets.youdied.image, new Vector2((graphicAssets.youdied.image.width - canvas.width) / 2, 0));
-        this.diedSpriteOpacity = 0;
-        this.diedSpriteOpacitySpeed = 1 / 3;
+        // maximun number of bullets
+        this.maxBullesCount = 20;
     }
 
     Start()
@@ -29,17 +27,17 @@ class Scene1 extends Scene {
         super.Start();
 
         // init the box2d world
-        this.world = CreateWorld(ctx, new b2Vec2(0, -10));
+        this.world = CreateWorld(ctx, new b2Vec2(0, 0));
 
         // init the player
-        this.player = new Player(this.playerInitialPosition, 0);
+        this.player = new Chopper(this.playerInitialPosition, 0);
         this.player.Start(this);
         this.player.active = true;
 
         this.AddGameObject(this.player);
 
         // init the ui
-        this.ui.Start(this.player);
+        this.ui.Start(this);
 
         // create the box2d world objects
         // floor
@@ -48,6 +46,8 @@ class Scene1 extends Scene {
         CreateEdge(this.world, 0, 2, 0, -4, 0, 4, {type : b2Body.b2_staticBody});
         // right wall
         CreateEdge(this.world, 6.4, 2, 0, -4, 0, 4, {type : b2Body.b2_staticBody});
+        // cellar
+        CreateEdge(this.world, 3, 4.6, -4, 0, 4, 0, {type : b2Body.b2_staticBody});
     }
 
     Update(deltaTime)
@@ -76,9 +76,11 @@ class Scene1 extends Scene {
 
                 this.ui.Update(deltaTime);
 
-                // set the players position to the mouse
-                //this.player.position.x = Input.mouse.x;
-                //this.player.position.y = Input.mouse.y;
+                // check scene ended condition
+                if (this.player.GetNumberOfBulletsInScene() >= this.maxBullesCount)
+                {
+                    this.currentState = SceneState.GameOver;
+                }
                 break;
 
             case SceneState.PauseIngame:
@@ -93,7 +95,7 @@ class Scene1 extends Scene {
                 break;
 
             case SceneState.GameOver:
-                this.diedSpriteOpacity += this.diedSpriteOpacitySpeed * deltaTime;
+                this.ui.UpdateEnd(deltaTime);
                 break;
         }
     }
@@ -113,15 +115,6 @@ class Scene1 extends Scene {
                 super.Draw(ctx);
 
                 this.ui.Draw(ctx);
-
-                // lens of truth
-                ctx.fillStyle = "black";
-                ctx.globalCompositeOperation = "hue";
-                ctx.beginPath();
-                ctx.arc(Input.mouse.x, Input.mouse.y, 100, 0, PI2, true);
-                //ctx.arc(this.player.position.x, this.player.position.y, 100, 0, PI2, true);
-                ctx.fill();
-                ctx.globalCompositeOperation = "source-over";
                 break;
 
             case SceneState.PauseIngame:
@@ -142,13 +135,7 @@ class Scene1 extends Scene {
 
                 this.background.Draw(ctx);
 
-                this.ui.Draw(ctx);
-
-                ctx.fillStyle = "rgba(0, 0, 0," + this.diedSpriteOpacity + ")";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.globalAlpha = this.diedSpriteOpacity;
-                this.diedSprite.Draw(ctx);
-                ctx.globalAlpha = 1;
+                this.ui.DrawEnd(ctx);
                 break;
         }
     }
@@ -156,5 +143,15 @@ class Scene1 extends Scene {
     PlayerHasDie()
     {
         this.currentState = SceneState.GameOver;
+    }
+
+    ResetButtonPressed () 
+    {
+        InitScene();
+    }
+
+    GoBackToMainMenuPressed () 
+    {
+        ShowMainMenuAgain();
     }
 }
