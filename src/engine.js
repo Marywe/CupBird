@@ -37,6 +37,14 @@ var graphicAssets = {
         path: "assets/background1.jpg",
         image: null
     },
+    clouds: {
+        path: "assets/clouds.png",
+        image: null
+    },
+    trees: {
+        path: "assets/trees.png",
+        image: null
+    },
     helicopter: {
         path: "assets/helicopter.png",
         image: null
