@@ -28,14 +28,7 @@ var currentScene = null;
 
 // graphic assets references
 var graphicAssets = {
-    braid: {
-        path: "assets/braid_spritesheet.png",
-        image: null
-    },
-    knight: {
-        path: "assets/valiant_knight.png",
-        image: null
-    },
+
     youdied: {
         path: "assets/youdied.png",
         image: null
