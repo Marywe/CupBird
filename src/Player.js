@@ -1,4 +1,3 @@
-
 class Chopper extends GameObject {
 
     constructor(position, rotation)
@@ -16,7 +15,7 @@ class Chopper extends GameObject {
         // maximun displacement velocity
         this.maxVelocity = 2.5;
 
-        this.shootCadency = 0.2;
+        this.shootCadency = 0.4;
         this.shootCadencyAux = this.shootCadency;
         this.bulletSpawnPoint = new Vector2(0, 0);
         this.bullets = [];
@@ -77,13 +76,13 @@ class Chopper extends GameObject {
             {
                 newBullet = CreateBall(world, this.position.x / scale + this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
 
-                newBullet.ApplyImpulse(new b2Vec2(0.02, 0), new b2Vec2(0, 0));
+                newBullet.ApplyImpulse(new b2Vec2(0.05, 0), new b2Vec2(0, 0));
             }
             else
             {
                 newBullet = CreateBall(world, this.position.x / scale - this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
 
-                newBullet.ApplyImpulse(new b2Vec2(-0.02, 0), new b2Vec2(0, 0));
+                newBullet.ApplyImpulse(new b2Vec2(-0.05, 0), new b2Vec2(0, 0));
             }
             
             this.bullets.push(newBullet);
