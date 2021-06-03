@@ -36,18 +36,26 @@ class GameScene extends Scene {
 
         this.AddGameObject(this.player);
 
+
+        this.uwu = new Enemy(new Vector2(100,100), 0);
+        this.uwu.Start(this);
+        this.uwu.active = true;
+
+        this.AddGameObject(this.uwu);
+
         // init the ui
         this.ui.Start(this);
 
         // create the box2d world objects
         // floor
-        CreateEdge(this.world, 3, 0.1, -4, 0, 4, 0, {type : b2Body.b2_staticBody});
+        CreateEdge(this.world, 3, 0, -4, 0,10, 0, {type : b2Body.b2_staticBody});
         // left wall
         CreateEdge(this.world, 0, 2, 0, -4, 0, 4, {type : b2Body.b2_staticBody});
         // right wall
-        CreateEdge(this.world, 6.4, 2, 0, -4, 0, 4, {type : b2Body.b2_staticBody});
+        CreateEdge(this.world, 10, 2, 0, -4, 0, 4, {type : b2Body.b2_staticBody});
         // cellar
-        CreateEdge(this.world, 3, 4.6, -4, 0, 4, 0, {type : b2Body.b2_staticBody});
+
+        CreateEdge(this.world, 5,6, -4, 0, 10, 0, {type : b2Body.b2_staticBody});
     }
 
     Update(deltaTime)
