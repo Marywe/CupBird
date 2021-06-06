@@ -35,10 +35,7 @@ class Enemy extends GameObject {
         this.shootCadencyAux += deltaTime;
 
         
-        if (this.movingLeft && movementVelocity.x > 1.5)
-            this.movingLeft = false;
-        else if (!this.movingLeft && movementVelocity.x < -1.5)
-            this.movingLeft = true;
+  
 
         // update the position
         let bodyPosition = this.body.GetPosition();
