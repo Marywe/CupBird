@@ -9,12 +9,6 @@ class Enemy extends GameObject {
         // physic body
         this.body = null;
 
-        // force movement
-        this.forceMovement = 50;
-
-        // maximun displacement velocity
-        this.maxVelocity = 2.5;
-
         this.shootCadency = 0.4;
         this.shootCadencyAux = this.shootCadency;
         this.bulletSpawnPoint = new Vector2(0, 0);
@@ -27,7 +21,7 @@ class Enemy extends GameObject {
     {
         super.Start(scene);
 
-        this.body = CreateBox(world, 5 + this.position.x / scale , this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
     }
 
     Update(deltaTime)
@@ -46,7 +40,7 @@ class Enemy extends GameObject {
         this.position.x = bodyPosition.x * scale;
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
 
-        //if (Input.IsMousePressed() && this.shootCadencyAux > this.shootCadency)
+        //if (this.shootCadencyAux > this.shootCadency)
         //{
             //this.Shoot();
         //}
@@ -102,7 +96,7 @@ class Enemy extends GameObject {
                       
         newBullet = CreateBall(world, this.position.x / scale - this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
         newBullet.ApplyImpulse(new b2Vec2(-0.01, 0), new b2Vec2(0, 0));
-       
+       this.bullets.push(newBullet);
         this.shootCadencyAux = 0;
     }
     

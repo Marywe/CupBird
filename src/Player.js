@@ -1,4 +1,4 @@
-class Chopper extends GameObject {
+class Player extends GameObject {
 
     constructor(position, rotation)
     {

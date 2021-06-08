@@ -30,14 +30,13 @@ class GameScene extends Scene {
         this.world = CreateWorld(ctx, new b2Vec2(0, 0));
 
         // init the player
-        this.player = new Chopper(this.playerInitialPosition, 0);
+        this.player = new Player(this.playerInitialPosition, 0);
         this.player.Start(this);
         this.player.active = true;
 
         this.AddGameObject(this.player);
 
-
-        this.uwu = new Enemy(new Vector2(400,200), 0);
+        this.uwu = new Enemy(new Vector2(1000,500), 0);
         this.uwu.Start(this);
         this.uwu.active = true;
 
@@ -81,7 +80,6 @@ class GameScene extends Scene {
                 super.Update(deltaTime);
 
                 this.background.Update(deltaTime);
-
                 this.ui.Update(deltaTime);
 
                 // check scene ended condition
