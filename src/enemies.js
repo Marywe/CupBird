@@ -19,13 +19,15 @@ class Enemy extends GameObject {
         this.shootCadencyAux = this.shootCadency;
         this.bulletSpawnPoint = new Vector2(0, 0);
         this.bullets = [];
+        this.startPos = new b2Vec2(0, 0)
+        this.startSin = 0;
     }
 
     Start(scene)
     {
         super.Start(scene);
 
-        this.body = CreateBox(world, this.position.x / scale, this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+        this.body = CreateBox(world, 5 + this.position.x / scale , this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
     }
 
     Update(deltaTime)
@@ -35,6 +37,11 @@ class Enemy extends GameObject {
         this.shootCadencyAux += deltaTime;
 
         // update the position
+        this.startSin +=deltaTime;
+        let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
+
+        this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
+
         let bodyPosition = this.body.GetPosition();
         this.position.x = bodyPosition.x * scale;
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
@@ -98,6 +105,7 @@ class Enemy extends GameObject {
        
         this.shootCadencyAux = 0;
     }
+    
 
     Die()
     {

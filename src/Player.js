@@ -36,14 +36,28 @@ class Chopper extends GameObject {
 
         // left-right movement
         let movementVector = new b2Vec2(0, 0);
-        if (Input.IsKeyPressed(KEY_LEFT) || Input.IsKeyPressed(KEY_A))
+        
+        if (Input.IsKeyPressed(KEY_A) )
             movementVector.x -= 1;
-        if (Input.IsKeyPressed(KEY_RIGHT) || Input.IsKeyPressed(KEY_D))
+        if (Input.IsKeyPressed(KEY_D))
             movementVector.x += 1;
-        if (Input.IsKeyPressed(KEY_UP) || Input.IsKeyPressed(KEY_W))
+        if (Input.IsKeyPressed(KEY_W) )
             movementVector.y += 1;
-        if (Input.IsKeyPressed(KEY_DOWN) || Input.IsKeyPressed(KEY_S))
+        if (Input.IsKeyPressed(KEY_S))
             movementVector.y -= 1;
+
+
+        let shootVector = new b2Vec2(0, 0);
+
+        if ( Input.IsKeyPressed(KEY_LEFT))
+            shootVector.x -= 1;
+        if ( Input.IsKeyPressed(KEY_RIGHT))
+            shootVector.x += 1;
+        if (Input.IsKeyPressed(KEY_UP))
+            shootVector.y += 1;
+        if ( Input.IsKeyPressed(KEY_DOWN))
+            shootVector.y -= 1;
+
 
         movementVector.Normalize();
         movementVector.Multiply(this.forceMovement);
