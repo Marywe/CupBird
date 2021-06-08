@@ -4,7 +4,7 @@ class Enemy extends GameObject {
     {
         super(position, rotation);
 
-        this.sprite = new Sprite(graphicAssets.helicopter.image, new Vector2(graphicAssets.helicopter.image.width / 2, graphicAssets.helicopter.image.height / 2));
+        this.sprite = new Sprite(graphicAssets.lilfly.image, new Vector2(graphicAssets.lilfly.image.width / 2, graphicAssets.lilfly.image.height / 2));
 
         // physic body
         this.body = null;
@@ -25,7 +25,7 @@ class Enemy extends GameObject {
     {
         super.Start(scene);
 
-        this.body = CreateBox(world, this.position.x / scale, this.position.y / scale, 0.6, 0.3, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+        this.body = CreateBox(world, this.position.x / scale, this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
     }
 
     Update(deltaTime)
@@ -34,40 +34,16 @@ class Enemy extends GameObject {
 
         this.shootCadencyAux += deltaTime;
 
-        
-  
-
         // update the position
         let bodyPosition = this.body.GetPosition();
         this.position.x = bodyPosition.x * scale;
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
 
-        if (Input.IsMousePressed() && this.shootCadencyAux > this.shootCadency)
-        {
-            let newBullet = null;
-            if (!this.movingLeft)
-            {
-                newBullet = CreateBall(world, this.position.x / scale + this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
+        //if (Input.IsMousePressed() && this.shootCadencyAux > this.shootCadency)
+        //{
+            //this.Shoot();
+        //}
 
-                newBullet.ApplyImpulse(new b2Vec2(0.05, 0), new b2Vec2(0, 0));
-            }
-            else
-            {
-                newBullet = CreateBall(world, this.position.x / scale - this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
-
-                newBullet.ApplyImpulse(new b2Vec2(-0.05, 0), new b2Vec2(0, 0));
-            }
-            
-            this.bullets.push(newBullet);
-
-            this.shootCadencyAux = 0;
-        }
-
-        // make the player lose life because of yes
-        //this.life -= 1.25; 
-
-        if (this.life <= 0.0)
-            this.scene.PlayerHasDie();
     }
 
     Draw(ctx)
@@ -77,16 +53,10 @@ class Enemy extends GameObject {
 
         ctx.save();
 
-        if (this.movingLeft)
-        {
+        
             ctx.translate(this.position.x, this.position.y);
-            ctx.scale(-0.5, 0.5);
-        }
-        else
-        {
-            ctx.translate(this.position.x, this.position.y);
-            ctx.scale(0.5, 0.5);
-        }
+            ctx.scale(0.2, 0.2);
+        
         ctx.rotate(this.rotation);
 
         this.sprite.Draw(ctx);
@@ -117,6 +87,21 @@ class Enemy extends GameObject {
     GetNumberOfBulletsInScene()
     {
         return this.bullets.length;
+    }
+
+    Shoot()
+    {
+        let newBullet = null;
+                      
+        newBullet = CreateBall(world, this.position.x / scale - this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
+        newBullet.ApplyImpulse(new b2Vec2(-0.01, 0), new b2Vec2(0, 0));
+       
+        this.shootCadencyAux = 0;
+    }
+
+    Die()
+    {
+        delete this;
     }
 
 

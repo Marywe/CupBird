@@ -52,7 +52,12 @@ var graphicAssets = {
     pokeball: {
         path: "assets/pokeball.png",
         image: null
+    },
+    lilfly: {
+        path: "assets/lilfly.png",
+        image: null
     }
+
 };
 
 // audio assets references
@@ -210,7 +215,7 @@ function Draw(ctx)
     currentScene.Draw(ctx);
 
     // draw FPS data
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "black";
     ctx.font = "12px Comic Sans MS";
     ctx.textAlign = "left";
     ctx.fillText("frames=" + currentFramesCounter, 10, 20);

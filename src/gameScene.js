@@ -37,7 +37,7 @@ class GameScene extends Scene {
         this.AddGameObject(this.player);
 
 
-        this.uwu = new Enemy(new Vector2(100,100), 0);
+        this.uwu = new Enemy(new Vector2(400,200), 0);
         this.uwu.Start(this);
         this.uwu.active = true;
 
