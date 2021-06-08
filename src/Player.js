@@ -19,6 +19,9 @@ class Chopper extends GameObject {
         this.shootCadencyAux = this.shootCadency;
         this.bulletSpawnPoint = new Vector2(0, 0);
         this.bullets = [];
+        //Shoot
+        this.shootVector = new Vector2(0, 0);
+        this.aux = new Vector2(0, 0);
     }
 
     Start(scene)
@@ -34,7 +37,7 @@ class Chopper extends GameObject {
 
         this.shootCadencyAux += deltaTime;
 
-        // left-right movement
+        // movement
         let movementVector = new b2Vec2(0, 0);
         
         if (Input.IsKeyPressed(KEY_A) )
@@ -45,19 +48,6 @@ class Chopper extends GameObject {
             movementVector.y += 1;
         if (Input.IsKeyPressed(KEY_S))
             movementVector.y -= 1;
-
-
-        let shootVector = new b2Vec2(0, 0);
-
-        if ( Input.IsKeyPressed(KEY_LEFT))
-            shootVector.x -= 1;
-        if ( Input.IsKeyPressed(KEY_RIGHT))
-            shootVector.x += 1;
-        if (Input.IsKeyPressed(KEY_UP))
-            shootVector.y += 1;
-        if ( Input.IsKeyPressed(KEY_DOWN))
-            shootVector.y -= 1;
-
 
         movementVector.Normalize();
         movementVector.Multiply(this.forceMovement);
@@ -73,40 +63,45 @@ class Chopper extends GameObject {
             this.body.SetLinearVelocity(movementVelocity);
         }
 
-        if (this.movingLeft && movementVelocity.x > 1.5)
-            this.movingLeft = false;
-        else if (!this.movingLeft && movementVelocity.x < -1.5)
-            this.movingLeft = true;
-
         // update the position
         let bodyPosition = this.body.GetPosition();
         this.position.x = bodyPosition.x * scale;
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
 
-        if (Input.IsMousePressed() && this.shootCadencyAux > this.shootCadency)
+        if(this.movingLeft && movementVelocity.x >1.5)
+        this.movingLeft=false;
+        else if(!this.movingLeft && movementVelocity.x <-1.5)
+        this.movingLeft=true;
+
+
+        
+        
+        if ( Input.IsKeyPressed(KEY_LEFT))
+        this.shootVector.x = -1;
+        if ( Input.IsKeyPressed(KEY_RIGHT))
+        this.shootVector.x = 1;
+        if (Input.IsKeyPressed(KEY_UP))
+        this.shootVector.y = 1;
+        if ( Input.IsKeyPressed(KEY_DOWN))
+        this.shootVector.y = -1;
+
+        if (this.shootCadencyAux > this.shootCadency)
         {
-            let newBullet = null;
-            if (!this.movingLeft)
-            {
-                newBullet = CreateBall(world, this.position.x / scale + this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
-
-                newBullet.ApplyImpulse(new b2Vec2(0.05, 0), new b2Vec2(0, 0));
-            }
-            else
-            {
-                newBullet = CreateBall(world, this.position.x / scale - this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
-
-                newBullet.ApplyImpulse(new b2Vec2(-0.05, 0), new b2Vec2(0, 0));
-            }
             
-            this.bullets.push(newBullet);
+            if (this.shootVector.x != this.aux.x || this.shootVector.y !=this.aux.y)
+            {
+                let newBullet = null;
+                newBullet = CreateBall(world, this.position.x / scale + this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
+                newBullet.ApplyImpulse(new b2Vec2(0.05 * this.shootVector.x, 0.05 * this.shootVector.y) , new b2Vec2(0, 0));
+                this.bullets.push(newBullet);
+            }
+           
 
             this.shootCadencyAux = 0;
         }
 
-        // make the player lose life because of yes
-        //this.life -= 1.25; 
-
+        this.shootVector.x = 0;
+        this.shootVector.y = 0;
         if (this.life <= 0.0)
             this.scene.PlayerHasDie();
     }

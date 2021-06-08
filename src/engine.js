@@ -226,7 +226,7 @@ function Draw(ctx)
 
 function InitScene()
 {
-    currentScene = new Scene1();
+    currentScene = new GameScene();
     currentScene.Start();
 }
 
