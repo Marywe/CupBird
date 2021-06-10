@@ -36,11 +36,17 @@ class GameScene extends Scene {
 
         this.AddGameObject(this.player);
 
-        this.uwu = new Enemy(new Vector2(1000,500), 0);
-        this.uwu.Start(this);
-        this.uwu.active = true;
+        this.lilfly = new LilFly(new Vector2(1000,500), 0);
+        this.lilfly.Start(this);
+        this.lilfly.active = true;
 
-        this.AddGameObject(this.uwu);
+        this.AddGameObject(this.lilfly);
+
+        this.fly = new Fly(new Vector2(800,400), 0);
+        this.fly.Start(this);
+        this.fly.active = true;
+
+        this.AddGameObject(this.fly);
 
         // init the ui
         this.ui.Start(this);

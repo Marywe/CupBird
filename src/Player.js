@@ -28,7 +28,7 @@ class Player extends GameObject {
     {
         super.Start(scene);
 
-        this.body = CreateBox(world, this.position.x / scale, this.position.y / scale, 0.6, 0.3, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+        this.body = CreateBox(world, this.position.x / scale, this.position.y / scale, 0.5, 0.5, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
     }
 
     Update(deltaTime)

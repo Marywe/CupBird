@@ -24,8 +24,18 @@ class Scene {
         if (this.currentState == SceneState.Ingame)
         {
             this.gameObjects.forEach(gameObject => {
-                if (gameObject.active)
-                    gameObject.Update(deltaTime);
+                if(gameObject.alive){
+                    if (gameObject.active)
+                        gameObject.Update(deltaTime);
+                        
+                    
+                }
+                else {
+                    var n = this.gameObjects.indexOf(GameObject);
+                    this.gameObjects.splice(n, 1);
+                }
+
+                
             });
         }
     }
@@ -33,7 +43,7 @@ class Scene {
     Draw(ctx)
     {
         this.gameObjects.forEach(gameObject => {
-            if (gameObject.active)
+            if (gameObject.active && gameObject.alive)
                 gameObject.Draw(ctx);
         });
     }
@@ -41,5 +51,7 @@ class Scene {
     AddGameObject(gameObject)
     {
         this.gameObjects.push(gameObject);
+        
     }
+
 }

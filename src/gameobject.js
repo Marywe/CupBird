@@ -6,6 +6,7 @@ class GameObject {
         this.position = position;
         this.rotation = rotation;
         this.scene = null;
+        this.alive=true;
     }
 
     Start(scene)

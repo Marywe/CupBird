@@ -46,7 +46,7 @@ var graphicAssets = {
         image: null
     },
     helicopter: {
-        path: "assets/helicopter.png",
+        path: "assets/azazel.png",
         image: null
     },
     pokeball: {
@@ -55,6 +55,14 @@ var graphicAssets = {
     },
     lilfly: {
         path: "assets/lilfly.png",
+        image: null
+    },
+    keeper: {
+        path: "assets/keeper.png",
+        image: null
+    },
+    fly: {
+        path: "assets/fly.png",
         image: null
     }
 

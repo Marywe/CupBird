@@ -1,10 +1,19 @@
-class Enemy extends GameObject {
+class Fly extends GameObject {
 
     constructor(position, rotation)
     {
         super(position, rotation);
 
-        this.sprite = new Sprite(graphicAssets.lilfly.image, new Vector2(graphicAssets.lilfly.image.width / 2, graphicAssets.lilfly.image.height / 2));
+        
+        this.animation = new SSAnimation(
+            graphicAssets.fly.image,
+            32, // frameWidth
+            32, // frameHeight
+            [0,1],
+            1 // frameCount
+        );
+        
+        this.animation.PlayAnimation(0);
 
         // physic body
         this.body = null;
@@ -15,19 +24,23 @@ class Enemy extends GameObject {
         this.bullets = [];
         this.startPos = new b2Vec2(0, 0)
         this.startSin = 0;
+
+        this.life = 4;
     }
 
     Start(scene)
     {
         super.Start(scene);
-
+      
         this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+
     }
 
     Update(deltaTime)
     {
         super.Update(deltaTime);
-
+        this.animation.Update(deltaTime);
+        this.animation.PlayAnimation(0);
         this.shootCadencyAux += deltaTime;
 
         // update the position
@@ -35,7 +48,7 @@ class Enemy extends GameObject {
         let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
-
+        
         let bodyPosition = this.body.GetPosition();
         this.position.x = bodyPosition.x * scale;
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
@@ -44,6 +57,9 @@ class Enemy extends GameObject {
         //{
             //this.Shoot();
         //}
+        this.life -= deltaTime;
+
+        if(this.life <= 0)          this.Die();
 
     }
 
@@ -56,11 +72,11 @@ class Enemy extends GameObject {
 
         
             ctx.translate(this.position.x, this.position.y);
-            ctx.scale(0.2, 0.2);
+            ctx.scale(1, 1);
         
         ctx.rotate(this.rotation);
 
-        this.sprite.Draw(ctx);
+        this.animation.Draw(ctx);
 
         ctx.restore();
 
@@ -103,7 +119,10 @@ class Enemy extends GameObject {
 
     Die()
     {
+        this.alive = false;
         delete this;
+       
+
     }
 
 
