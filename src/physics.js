@@ -248,7 +248,7 @@ function DrawWorldDebug(ctx)
     ctx.save();
     ctx.translate(0, canvas.height);
     ctx.scale(1, -1);
-    world.DrawDebugData();
+    world.DrawDebugData(); //QUITAR
     ctx.restore();
 }
 
@@ -266,17 +266,15 @@ function OnContactDetected(contact)
 
     if (userDataA != null && userDataB != null)
     {
-        console.log("collision between " + userDataA + " and " + userDataB);
-        if (userDataA === "launcher" && userDataB === "ball" ||
-            userDataA === "ball" && userDataB === "launcher")
+        if (userDataA === "player" && userDataB === "fly" ||userDataA === "fly" && userDataB === "player"  )
         {
-            game.launchBall = true;
+            console.log("collision between " + userDataA + " and " + userDataB);
         }
-        else if (userDataA === "gutter" && userDataB === "ball" ||
-        userDataA === "ball" && userDataB === "gutter")
-        {
-            game.resetBall = true;
-        }
+        // else if (userDataA === "gutter" && userDataB === "ball" ||
+        // userDataA === "ball" && userDataB === "gutter")
+        // {
+        //     game.resetBall = true;
+        // }
     }
 }
 

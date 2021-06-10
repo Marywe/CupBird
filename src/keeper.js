@@ -32,8 +32,9 @@ class Keeper extends GameObject {
 
         // update the position
         this.startSin +=deltaTime;
-        let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
-
+        this.startCos +=deltaTime;
+        let movementVector = new b2Vec2(-(Math.sin(this.startCos * 2.5)), Math.sin(this.startSin * 2.5));
+        
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
 
         let bodyPosition = this.body.GetPosition();

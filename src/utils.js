@@ -258,4 +258,6 @@ class Vector2
         this.Random();
         this.Normalize();
     }
+
+    
 }

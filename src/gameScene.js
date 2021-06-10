@@ -28,6 +28,7 @@ class GameScene extends Scene {
 
         // init the box2d world
         this.world = CreateWorld(ctx, new b2Vec2(0, 0));
+       
 
         // init the player
         this.player = new Player(this.playerInitialPosition, 0);

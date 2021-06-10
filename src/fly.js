@@ -32,7 +32,9 @@ class Fly extends GameObject {
     {
         super.Start(scene);
       
-        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, 
+            {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+            this.body.user_data = 'fly';
 
     }
 
@@ -45,6 +47,7 @@ class Fly extends GameObject {
 
         // update the position
         this.startSin +=deltaTime;
+        
         let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
@@ -59,7 +62,7 @@ class Fly extends GameObject {
         //}
         this.life -= deltaTime;
 
-        if(this.life <= 0)          this.Die();
+        //if(this.life <= 0)          this.Die();
 
     }
 

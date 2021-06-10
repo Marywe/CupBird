@@ -16,7 +16,8 @@ class Scene {
 
     Start()
     {
-        this.currentState = SceneState.Ingame;        
+        this.currentState = SceneState.Ingame;
+        SetupPhysics();         
     }
 
     Update(deltaTime)
