@@ -103,6 +103,8 @@ class Player extends GameObject {
    
                 this.shootCadencyAux = 0;
 
+                audio.shoot.play();
+                audio.shoot.loop = true;
                
           
             }
@@ -111,9 +113,7 @@ class Player extends GameObject {
         
 
         this.shootVector.x = 0;
-        this.shootVector.y = 0;
-
-    
+        this.shootVector.y = 0;  
  
     }
 
@@ -163,8 +163,4 @@ class Player extends GameObject {
         return this.life / this.maxLife;
     }
 
-    GetNumberOfBulletsInScene()
-    {
-        return this.bullets.length;
-    }
 }

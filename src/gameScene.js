@@ -67,6 +67,8 @@ class GameScene extends Scene {
         CreateEdge(this.world, 5,6, -4, 0, 10, 0, {type : b2Body.b2_staticBody});
 
         this.invulTime = 2.5;
+        
+       
     }
 
     Update(deltaTime)
@@ -81,6 +83,7 @@ class GameScene extends Scene {
                 // Step(timestep , velocity  iterations, position iterations)
                 this.world.Step(deltaTime, 8, 3);
                 this.world.ClearForces();
+
 
                 if(bossLife<=0){
                     bossLife=40;

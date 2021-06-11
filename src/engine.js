@@ -117,7 +117,9 @@ function BodyLoaded () {
 
     LoadImages(graphicAssets, function() {
         // load audio
-        audio.laser = document.getElementById("laserSound");
+        audio.shoot = document.getElementById("shootSound");
+
+        audio.greed = document.getElementById("greed");
 
         // prepare the Main Menu
         InitMainMenu();
