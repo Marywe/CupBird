@@ -37,18 +37,7 @@ class GameScene extends Scene {
 
         this.AddGameObject(this.player);
 
-        this.lilfly = new LilFly(new Vector2(1000,500), 0);
-        this.lilfly.Start(this);
-        this.lilfly.active = true;
-
-        this.AddGameObject(this.lilfly);
-
-        this.fly = new Fly(new Vector2(800,400), 0);
-        this.fly.Start(this);
-        this.fly.active = true;
-
-        this.AddGameObject(this.fly);
-
+       
         this.keep = new Keeper(new Vector2(100,200), 0);
         this.keep.Start(this);
         this.keep.active = true;
@@ -56,7 +45,7 @@ class GameScene extends Scene {
         this.AddGameObject(this.keep);
 
 
-        this.boss = new Boss(new Vector2(700,400), 0);
+        this.boss = new Boss(new Vector2(750,340), 0);
         this.boss.Start(this);
         this.boss.active = true;
 
@@ -95,7 +84,7 @@ class GameScene extends Scene {
                  // check scene ended condition
                 if (playerLife >= this.player.maxLife)
                 {
-                    playerLife = 0;
+                   
                     this.currentState = SceneState.GameOver;
       
                     
@@ -112,8 +101,6 @@ class GameScene extends Scene {
 
                 this.background.Update(deltaTime);
                 this.ui.Update(deltaTime);
-
-                console.log(playerLife);
 
                 //Timer para invulnerabilidad
                 if(invulnerability){

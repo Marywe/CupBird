@@ -29,10 +29,6 @@ var currentScene = null;
 // graphic assets references
 var graphicAssets = {
 
-    youdied: {
-        path: "assets/youdied.png",
-        image: null
-    },
     background1: {
         path: "assets/background1.jpg",
         image: null

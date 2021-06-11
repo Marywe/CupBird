@@ -13,7 +13,7 @@ class Boss extends GameObject {
             1/6 // frameCount
         );
         
-        this.animation.PlayAnimationLoop(0);
+        this.animation.PlayAnimationLoop(1);
 
         // physic body
         this.body = null;
@@ -26,6 +26,10 @@ class Boss extends GameObject {
         this.startSin = 0;
 
         this.life = 40;
+
+        this.spawn = true;
+        this.counterSpawn = 0;
+        this.counterSpawning = 0;
     }
 
     Start(scene)
@@ -42,13 +46,13 @@ class Boss extends GameObject {
     {
         super.Update(deltaTime);
         this.animation.Update(deltaTime);
-        this.animation.PlayAnimationLoop(0);
-        this.shootCadencyAux += deltaTime;
-
+        
         // update the position
         this.startSin +=deltaTime;
         
-        let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
+        //let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
+        let movementVector = new b2Vec2(2.2*Math.cos(this.startSin) - 2.2*Math.sin(this.startSin),
+                                     2.2*Math.sin(this.startSin)+ 2.2*Math.cos(this.startSin));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
         
@@ -56,11 +60,35 @@ class Boss extends GameObject {
         this.position.x = bodyPosition.x * scale;
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
 
+        this.counterSpawn +=deltaTime;
+
         //if (this.shootCadencyAux > this.shootCadency)
         //{
             //this.Shoot();
         //}
         
+        if(this.spawn)
+            this.animation.PlayAnimationLoop(1);
+        else{
+
+        this.counterSpawning+=deltaTime;
+        this.animation.PlayAnimationLoop(0);
+        if(this.counterSpawning>= 0.5) {
+            this.spawn=true;
+            this.counterSpawning=0;
+        }
+    }
+    
+
+        if(this.counterSpawn >= Math.random() * (7 - 4) + 4)
+        {
+            this.Spawn();
+            this.counterSpawn = 0;  
+            this.spawn=false;  
+        }
+
+        this.shootCadencyAux += deltaTime;
+
 
         if(this.life <= 0)          this.Die();
 
@@ -75,7 +103,7 @@ class Boss extends GameObject {
 
         
             ctx.translate(this.position.x, this.position.y);
-            ctx.scale(3, 3);
+            ctx.scale(4, 4);
         
         ctx.rotate(this.rotation);
 
@@ -83,18 +111,6 @@ class Boss extends GameObject {
 
         ctx.restore();
 
-        for (let i = 0; i < this.bullets.length; i++)
-        {
-            const bulletPosition = this.bullets[i].GetPosition();
-
-            ctx.save();
-            ctx.translate(bulletPosition.x * scale, canvas.height - (bulletPosition.y * scale));
-            ctx.scale(0.02, 0.02);
-
-            ctx.drawImage(graphicAssets.pokeball.image, -432, -432);
-
-            ctx.restore();
-        }
 
         ctx.imageSmoothingEnabled = true;
     }
@@ -114,6 +130,31 @@ class Boss extends GameObject {
     {        
         this.active = false;
         world.DestroyBody(this.body);
+    }
+
+    Spawn(){
+
+        var randomSpawn = Math.floor(Math.random() * 2);
+        switch(randomSpawn){
+            case 0:
+                this.lilfly = new LilFly(new Vector2(this.position.x,canvas.height- this.position.y), 0);
+                this.lilfly.Start(this);
+                this.lilfly.active = true;
+        
+                this.scene.AddGameObject(this.lilfly);
+                break;
+            case 1:
+                
+            this.fly = new Fly(new Vector2(this.position.x, canvas.height- this.position.y), 0);
+            this.fly.Start(this);
+            this.fly.active = true;
+
+            this.scene.AddGameObject(this.fly);
+                break;
+        }
+       
+
+
     }
 
 

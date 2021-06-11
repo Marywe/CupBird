@@ -3,7 +3,8 @@ var SceneState = {
     Loading: 0,
     Ingame: 1,
     PauseIngame: 2,
-    GameOver: 3
+    GameOver: 3,
+    Win: 4
 }
 
 class Scene {
