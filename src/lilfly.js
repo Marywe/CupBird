@@ -22,6 +22,7 @@ class LilFly extends GameObject {
         super.Start(scene);
 
         this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+        this.body.SetUserData('fly');
     }
 
     Update(deltaTime)

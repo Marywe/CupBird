@@ -22,6 +22,8 @@ class Player extends GameObject {
         //Shoot
         this.shootVector = new Vector2(0, 0);
         this.aux = new Vector2(0, 0);
+
+        this.maxLife = 10;
     }
 
     Start(scene)
@@ -31,6 +33,7 @@ class Player extends GameObject {
         this.body = CreateBox(world, this.position.x / scale, this.position.y / scale, 0.5, 0.5, 
             {fixedRotation: true, restitution: 0.5, linearDamping: 8});
         this.body.SetUserData('player') ;
+
     }
 
     Update(deltaTime)
@@ -76,8 +79,7 @@ class Player extends GameObject {
         this.movingLeft=true;
 
 
-        
-        
+        //Shooting        
         if ( Input.IsKeyPressed(KEY_LEFT))
         this.shootVector.x = -1;
         if ( Input.IsKeyPressed(KEY_RIGHT))
@@ -92,20 +94,27 @@ class Player extends GameObject {
             
             if (this.shootVector.x != this.aux.x || this.shootVector.y !=this.aux.y)
             {
-                let newBullet = null;
-                newBullet = CreateBall(world, this.position.x / scale + this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
+                
+                let newBullet = CreateBall(world, this.position.x / scale + this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05,{isSensor: true} );
+                newBullet.m_userData = 'bullet';
+      
                 newBullet.ApplyImpulse(new b2Vec2(0.05 * this.shootVector.x, 0.05 * this.shootVector.y) , new b2Vec2(0, 0));
                 this.bullets.push(newBullet);
-            }
-           
+   
+                this.shootCadencyAux = 0;
 
-            this.shootCadencyAux = 0;
+               
+          
+            }
+
         }
+        
 
         this.shootVector.x = 0;
         this.shootVector.y = 0;
-        if (this.life <= 0.0)
-            this.scene.PlayerHasDie();
+
+    
+ 
     }
 
     Draw(ctx)
@@ -131,6 +140,7 @@ class Player extends GameObject {
 
         ctx.restore();
 
+
         for (let i = 0; i < this.bullets.length; i++)
         {
             const bulletPosition = this.bullets[i].GetPosition();
@@ -144,6 +154,7 @@ class Player extends GameObject {
             ctx.restore();
         }
 
+    
         ctx.imageSmoothingEnabled = true;
     }
 

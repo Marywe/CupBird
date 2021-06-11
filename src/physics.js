@@ -33,7 +33,7 @@ var bodyType = {
 }
 
 // aux function for creating boxes
-function CreateBox(world, x, y, width, height, options)
+function CreateBox(world, x, y, width, height, options, gameobject)
 {
     // default values
     options = AsignDefaultValues(options);
@@ -47,7 +47,7 @@ function CreateBox(world, x, y, width, height, options)
 
     // Body: position of the object and its type (dynamic, static o kinetic)
 	let body = CreateBody(world, x, y, options, fix_def);
-
+    body.gameobject = gameobject;
     return body;
 }
 
@@ -264,33 +264,25 @@ function OnContactDetected(contact)
     let userDataB = contact.GetFixtureB().GetBody().GetUserData();
 
     if (userDataA != null && userDataB != null)
-    {
-        
-        if ((userDataA === "player" && userDataB === "fly") || (userDataA === "fly" && userDataB === "player")  )
+    {        
+        if (((userDataA === "player" && userDataB === "fly") 
+        || (userDataA === "fly" && userDataB === "player")) 
+        && !invulnerability)
         {
-          
-        }
-        // else if (userDataA === "gutter" && userDataB === "ball" ||
-        // userDataA === "ball" && userDataB === "gutter")
-        // {
-        //     game.resetBall = true;
-        // }
-    }
-}
+            ++playerLife;
 
-function RayCastCollision(fixture, point, outputNormal, fraction)
-{
-    let body = fixture.GetBody();
-    if (body != null)
-    {
-        let userData = body.GetUserData();
-        if (userData != null)
-        {
-            console.log("Ray collision in " + userData.type +
-                ", point: {x:" + point.x + ", y:" + point.y + "}" +
-                ", vector: {x:" + outputNormal.x + ", y:" + outputNormal.y + "}");
+            invulnerability=true;
         }
-    }
 
-    return fraction;
+        if (userDataA === "bullet" && userDataB === "fly") {
+            
+           console.log(userDataA);
+        }
+            
+            
+        else if (userDataA === "fly" && userDataB === "bullet") {
+          contact.GetFixtureA().GetBody().gameobject.life--;
+        }
+
+    }
 }

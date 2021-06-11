@@ -64,6 +64,10 @@ var graphicAssets = {
     fly: {
         path: "assets/fly.png",
         image: null
+    },
+    death: {
+        path: "assets/deathnote.png",
+        image: null
     }
 
 };

@@ -33,9 +33,8 @@ class Fly extends GameObject {
         super.Start(scene);
       
         this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, 
-            {fixedRotation: true, restitution: 0.5, linearDamping: 8});
+            {fixedRotation: true, restitution: 0.5, linearDamping: 8}, this);
         this.body.SetUserData('fly');
-       
 
     }
 
@@ -61,9 +60,9 @@ class Fly extends GameObject {
         //{
             //this.Shoot();
         //}
-        this.life -= deltaTime;
+        
 
-        //if(this.life <= 0)          this.Die();
+        if(this.life <= 0)          this.Die();
 
     }
 
@@ -100,16 +99,6 @@ class Fly extends GameObject {
         ctx.imageSmoothingEnabled = true;
     }
 
-    GetActualProportionalLife()
-    {
-        return this.life / this.maxLife;
-    }
-
-    GetNumberOfBulletsInScene()
-    {
-        return this.bullets.length;
-    }
-
     Shoot()
     {
         let newBullet = null;
@@ -123,10 +112,9 @@ class Fly extends GameObject {
 
     Die()
     {
-        this.alive = false;
-        delete this;
-       
-
+        
+        this.active = false;
+        world.DestroyBody(this.body);
     }
 
 

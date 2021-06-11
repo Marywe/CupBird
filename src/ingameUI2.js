@@ -2,12 +2,15 @@ class ingameUI2 {
 
     constructor()
     {
+        //constructor(position, pivot, width, height, text, bgColor, strokeColor, textStyle, textColor)
         this.scene = null;
         this.time = 0;
 
-        this.reiniciarButton = new UIButton(new Vector2(canvasHalfWidth, canvasHalfHeight - 60), new Vector2(100, 30), 200, 60, "Reiniciar", "red", "white", "30px Comic Sans MS", "white");
+        this.reiniciarButton = new UIButton(new Vector2(canvasHalfWidth -55, canvasHalfHeight - 5 ),
+         new Vector2(50, 23), 100, 45, "REPLAY", "red", "black", "20px Monospace", "black");
 
-        this.goToMainMenuButton = new UIButton(new Vector2(canvasHalfWidth, canvasHalfHeight + 60), new Vector2(100, 30), 200, 60, "Menú Principal", "blue", "white", "30px Comic Sans MS", "yellow"); 
+        this.goToMainMenuButton = new UIButton(new Vector2(canvasHalfWidth - 10, canvasHalfHeight + 140),
+         new Vector2(85, 23), 170, 45, "MAIN MENU", "red", "black", "20px Monospace", "black"); 
     }
 
     Start(scene)
@@ -38,13 +41,13 @@ class ingameUI2 {
         let timeTrans = this.time.toFixed(1);
         ctx.strokeStyle = "black";
         ctx.fillStyle = "red";
-        ctx.font = "30px Comic Sans MS";
+        ctx.font = "30px monospace";
         ctx.textAlign = "center";
-        ctx.strokeText(timeTrans, canvasHalfWidth, 36);
-        ctx.fillText(timeTrans, canvasHalfWidth, 36);
+        ctx.strokeText(timeTrans, canvasHalfWidth - 150, 36);
+        ctx.fillText(timeTrans, canvasHalfWidth - 150, 36);
 
-        // bullets in scene
-        const currentLife = this.scene.player.GetNumberOfBulletsInScene() / this.scene.maxBullesCount;
+        // Life
+        const currentLife = (10 - playerLife) / 10;
         ctx.strokeStyle = "black";
         ctx.fillStyle = "lightGreen";
 
@@ -55,8 +58,11 @@ class ingameUI2 {
 
     DrawEnd(ctx)
     {
-        ctx.fillStyle = "grey";
+        ctx.fillStyle = "black";
+        
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(graphicAssets.death.image, canvasHalfWidth - (graphicAssets.death.image.width/2),
+         canvasHalfHeight - (graphicAssets.death.image.width/2));
 
         // Reset button
         this.reiniciarButton.Draw(ctx);

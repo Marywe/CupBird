@@ -1,3 +1,5 @@
+var playerLife = 0;
+var invulnerability = false;
 
 class GameScene extends Scene {
 
@@ -18,8 +20,6 @@ class GameScene extends Scene {
         // background
         this.background = new Background();
 
-        // maximun number of bullets
-        this.maxBullesCount = 20;
     }
 
     Start()
@@ -62,6 +62,8 @@ class GameScene extends Scene {
         // cellar
 
         CreateEdge(this.world, 5,6, -4, 0, 10, 0, {type : b2Body.b2_staticBody});
+
+        this.invulTime = 2.5;
     }
 
     Update(deltaTime)
@@ -77,6 +79,15 @@ class GameScene extends Scene {
                 this.world.Step(deltaTime, 8, 3);
                 this.world.ClearForces();
 
+                 // check scene ended condition
+                if (playerLife >= this.player.maxLife)
+                {
+                    playerLife = 0;
+                    this.currentState = SceneState.GameOver;
+      
+                    
+                }
+
                 if (Input.IsKeyUp(KEY_PAUSE) || Input.IsKeyUp(KEY_ESCAPE))
                 {
                     // ingame -> pause the game
@@ -89,11 +100,19 @@ class GameScene extends Scene {
                 this.background.Update(deltaTime);
                 this.ui.Update(deltaTime);
 
-                // check scene ended condition
-                if (this.player.GetNumberOfBulletsInScene() >= this.maxBullesCount)
-                {
-                    this.currentState = SceneState.GameOver;
+                console.log(playerLife);
+
+                //Timer para invulnerabilidad
+                if(invulnerability){
+                    this.invulTime -=deltaTime;
+
+                    if(this.invulTime <= 0){
+                        invulnerability = false;
+                        this.invulTime = 2.5;
+                    }
+                        
                 }
+              
                 break;
 
             case SceneState.PauseIngame:
@@ -140,7 +159,7 @@ class GameScene extends Scene {
                 ctx.font = "120px sans-serif";
                 ctx.textAlign = 'center';
                 ctx.fillText('PAUSE', 240, 400);
-                ctx.textAlign = 'left';
+                ctx.textAlign = 'center';
                 break;
 
             case SceneState.GameOver:
@@ -151,11 +170,6 @@ class GameScene extends Scene {
                 this.ui.DrawEnd(ctx);
                 break;
         }
-    }
-
-    PlayerHasDie()
-    {
-        this.currentState = SceneState.GameOver;
     }
 
     ResetButtonPressed () 
