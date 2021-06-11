@@ -30,7 +30,7 @@ class Player extends GameObject {
 
         this.body = CreateBox(world, this.position.x / scale, this.position.y / scale, 0.5, 0.5, 
             {fixedRotation: true, restitution: 0.5, linearDamping: 8});
-            this.body.user_data = 'fly';
+        this.body.SetUserData('player') ;
     }
 
     Update(deltaTime)

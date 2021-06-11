@@ -9,11 +9,11 @@ class Fly extends GameObject {
             graphicAssets.fly.image,
             32, // frameWidth
             32, // frameHeight
-            [0,1],
-            1 // frameCount
+            [2],
+            1/12 // frameCount
         );
         
-        this.animation.PlayAnimation(0);
+        this.animation.PlayAnimationLoop(1);
 
         // physic body
         this.body = null;
@@ -34,7 +34,8 @@ class Fly extends GameObject {
       
         this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, 
             {fixedRotation: true, restitution: 0.5, linearDamping: 8});
-            this.body.user_data = 'fly';
+        this.body.SetUserData('fly');
+       
 
     }
 
@@ -42,7 +43,7 @@ class Fly extends GameObject {
     {
         super.Update(deltaTime);
         this.animation.Update(deltaTime);
-        this.animation.PlayAnimation(0);
+        this.animation.PlayAnimationLoop(0);
         this.shootCadencyAux += deltaTime;
 
         // update the position
@@ -75,7 +76,7 @@ class Fly extends GameObject {
 
         
             ctx.translate(this.position.x, this.position.y);
-            ctx.scale(1, 1);
+            ctx.scale(2, 2);
         
         ctx.rotate(this.rotation);
 

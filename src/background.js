@@ -14,7 +14,7 @@ class Background {
         this.xTrees = 0;
         this.xTrees2 = 1146*1.5;
         this.cloudSpeed= 40;
-        this.treesSpeed= 150;
+        this.treesSpeed= 170;
     }
 
     Update(deltaTime)

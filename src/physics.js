@@ -259,16 +259,16 @@ function SetupPhysics()
 }
 
 function OnContactDetected(contact)
-{
-    //console.log(contact);
+{   
     let userDataA = contact.GetFixtureA().GetBody().GetUserData();
     let userDataB = contact.GetFixtureB().GetBody().GetUserData();
 
     if (userDataA != null && userDataB != null)
     {
-        if (userDataA === "player" && userDataB === "fly" ||userDataA === "fly" && userDataB === "player"  )
+        
+        if ((userDataA === "player" && userDataB === "fly") || (userDataA === "fly" && userDataB === "player")  )
         {
-            console.log("collision between " + userDataA + " and " + userDataB);
+          
         }
         // else if (userDataA === "gutter" && userDataB === "ball" ||
         // userDataA === "ball" && userDataB === "gutter")
