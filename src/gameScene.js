@@ -49,6 +49,19 @@ class GameScene extends Scene {
 
         this.AddGameObject(this.fly);
 
+        this.keep = new Keeper(new Vector2(100,200), 0);
+        this.keep.Start(this);
+        this.keep.active = true;
+
+        this.AddGameObject(this.keep);
+
+
+        this.boss = new Boss(new Vector2(700,400), 0);
+        this.boss.Start(this);
+        this.boss.active = true;
+
+        this.AddGameObject(this.boss);
+
         // init the ui
         this.ui.Start(this);
 
@@ -180,5 +193,9 @@ class GameScene extends Scene {
     GoBackToMainMenuPressed () 
     {
         ShowMainMenuAgain();
+    }
+
+    Spawn(){
+        
     }
 }

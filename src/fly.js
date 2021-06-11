@@ -111,8 +111,7 @@ class Fly extends GameObject {
     
 
     Die()
-    {
-        
+    {        
         this.active = false;
         world.DestroyBody(this.body);
     }

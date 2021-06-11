@@ -1,10 +1,19 @@
-class Keeper extends GameObject {
+class Boss extends GameObject {
 
     constructor(position, rotation)
     {
         super(position, rotation);
 
-        this.sprite = new Sprite(graphicAssets.keeper.image, new Vector2(graphicAssets.keeper.image.width / 2, graphicAssets.keeper.image.height / 2));
+        
+        this.animation = new SSAnimation(
+            graphicAssets.boss.image,
+            74, // frameWidth
+            -1 +122/2, // frameHeight
+            [3,1],
+            1/6 // frameCount
+        );
+        
+        this.animation.PlayAnimationLoop(0);
 
         // physic body
         this.body = null;
@@ -15,16 +24,15 @@ class Keeper extends GameObject {
         this.bullets = [];
         this.startPos = new b2Vec2(0, 0)
         this.startSin = 0;
-        this.startCos = 0;
 
-        this.life = 4;
+        this.life = 40;
     }
 
     Start(scene)
     {
         super.Start(scene);
       
-        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.3, 0.4, 
+        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, 
             {fixedRotation: true, restitution: 0.5, linearDamping: 8}, this);
         this.body.SetUserData('fly');
 
@@ -33,14 +41,14 @@ class Keeper extends GameObject {
     Update(deltaTime)
     {
         super.Update(deltaTime);
+        this.animation.Update(deltaTime);
+        this.animation.PlayAnimationLoop(0);
         this.shootCadencyAux += deltaTime;
-
 
         // update the position
         this.startSin +=deltaTime;
-        this.startCos +=deltaTime;
         
-        let movementVector = new b2Vec2(-Math.cos(this.startCos * 3.5) - 0.5, Math.sin(this.startSin * 2.5));
+        let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
         
@@ -66,11 +74,12 @@ class Keeper extends GameObject {
         ctx.save();
 
         
-            ctx.translate(this.position.x, this.position.y - 160);
-            ctx.scale(1.3, 1.3);
+            ctx.translate(this.position.x, this.position.y);
+            ctx.scale(2, 2);
         
         ctx.rotate(this.rotation);
-        this.sprite.Draw(ctx);
+
+        this.animation.Draw(ctx);
 
         ctx.restore();
 
@@ -102,8 +111,7 @@ class Keeper extends GameObject {
     
 
     Die()
-    {
-        
+    {        
         this.active = false;
         world.DestroyBody(this.body);
     }

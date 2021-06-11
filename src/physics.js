@@ -274,9 +274,10 @@ function OnContactDetected(contact)
             invulnerability=true;
         }
 
-        if (userDataA === "bullet" && userDataB === "fly") {
+        if (userDataA === "bullet" && userDataB === "fly") 
+        {
             
-           console.log(userDataA);
+            contact.GetFixtureB().GetBody().gameobject.life--;
         }
             
             

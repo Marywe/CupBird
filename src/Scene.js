@@ -28,10 +28,7 @@ class Scene {
                 if(gameObject.alive){
                     if (gameObject.active)
                         gameObject.Update(deltaTime);
-                    else {
-                          var n = this.gameObjects.indexOf(GameObject);
-                          this.gameObjects.splice(n, 1);
-                      }    
+                   
                     
                 }
             });

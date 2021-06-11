@@ -68,6 +68,10 @@ var graphicAssets = {
     death: {
         path: "assets/deathnote.png",
         image: null
+    },
+    boss: {
+        path: "assets/boss.png",
+        image: null
     }
 
 };
