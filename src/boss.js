@@ -114,16 +114,6 @@ class Boss extends GameObject {
 
         ctx.imageSmoothingEnabled = true;
     }
-
-    Shoot()
-    {
-        let newBullet = null;
-                      
-        newBullet = CreateBall(world, this.position.x / scale - this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
-        newBullet.ApplyImpulse(new b2Vec2(-0.01, 0), new b2Vec2(0, 0));
-       this.bullets.push(newBullet);
-        this.shootCadencyAux = 0;
-    }
     
 
     Die()
@@ -135,9 +125,10 @@ class Boss extends GameObject {
     Spawn(){
 
         var randomSpawn = Math.floor(Math.random() * 2);
+        var randomPos = Math.random() * (100 - -100) + -100
         switch(randomSpawn){
             case 0:
-                this.lilfly = new LilFly(new Vector2(this.position.x,canvas.height- this.position.y), 0);
+                this.lilfly = new LilFly(new Vector2(this.position.x, canvas.height- this.position.y + randomPos), 0);
                 this.lilfly.Start(this);
                 this.lilfly.active = true;
         
@@ -145,7 +136,7 @@ class Boss extends GameObject {
                 break;
             case 1:
                 
-            this.fly = new Fly(new Vector2(this.position.x, canvas.height- this.position.y), 0);
+            this.fly = new Fly(new Vector2(this.position.x, canvas.height- this.position.y + randomPos), 0);
             this.fly.Start(this);
             this.fly.active = true;
 

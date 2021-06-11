@@ -23,6 +23,7 @@ class ingameUI2 {
         this.time += deltaTime;
 
         audio.greed.play();
+        audio.greed.loop = true;
     }
 
     UpdateEnd(deltaTime)
@@ -51,17 +52,11 @@ class ingameUI2 {
         // Life
         const currentLife = (10 - playerLife) / 10;
         ctx.strokeStyle = "black";
+        ctx.fillStyle = "lightGreen";
+
+       
+        ctx.fillRect(400, 20, 200 * currentLife, 20);
         
-
-        if (currentLife >= 0) 
-        {
-            ctx.fillStyle = "lightGreen";
-            
-            if(currentLife >=4 ) ctx.fillStyle = "yellow";
-            if(currentLife >=7 ) ctx.fillStyle = "red";
-
-            ctx.fillRect(400, 20, 200 * currentLife, 20);
-        }
         ctx.strokeRect(400, 20, 200, 20);
 
 

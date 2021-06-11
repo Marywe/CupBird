@@ -1,7 +1,7 @@
 var playerLife = 0;
 var invulnerability = false;
 
-var bossLife = 3;
+var bossLife = 40;
 class GameScene extends Scene {
 
     constructor()

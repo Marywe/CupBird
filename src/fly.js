@@ -25,6 +25,7 @@ class Fly extends GameObject {
         this.startPos = new b2Vec2(0, 0)
         this.startSin = 0;
 
+        this.vel = 1;
         this.life = 4;
     }
 
@@ -48,7 +49,7 @@ class Fly extends GameObject {
         // update the position
         this.startSin +=deltaTime;
         
-        let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
+        let movementVector = new b2Vec2(-1.3 * this.vel, this.vel*Math.sin(this.startSin * 2.5));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
         
@@ -56,12 +57,10 @@ class Fly extends GameObject {
         this.position.x = bodyPosition.x * scale;
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
 
-        //if (this.shootCadencyAux > this.shootCadency)
-        //{
-            //this.Shoot();
-        //}
         
-
+        if(this.position.x < 250) this.vel = -1;
+        if (this.position.X > 900) this.vel = 1;
+        
         if(this.life <= 0)          this.Die();
 
     }
@@ -83,30 +82,7 @@ class Fly extends GameObject {
 
         ctx.restore();
 
-        for (let i = 0; i < this.bullets.length; i++)
-        {
-            const bulletPosition = this.bullets[i].GetPosition();
-
-            ctx.save();
-            ctx.translate(bulletPosition.x * scale, canvas.height - (bulletPosition.y * scale));
-            ctx.scale(0.02, 0.02);
-
-            ctx.drawImage(graphicAssets.pokeball.image, -432, -432);
-
-            ctx.restore();
-        }
-
         ctx.imageSmoothingEnabled = true;
-    }
-
-    Shoot()
-    {
-        let newBullet = null;
-                      
-        newBullet = CreateBall(world, this.position.x / scale - this.bulletSpawnPoint.x, (canvas.height - this.position.y) / scale, 0.05, {isSensor: true});
-        newBullet.ApplyImpulse(new b2Vec2(-0.01, 0), new b2Vec2(0, 0));
-       this.bullets.push(newBullet);
-        this.shootCadencyAux = 0;
     }
     
 

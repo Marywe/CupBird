@@ -104,7 +104,6 @@ class Player extends GameObject {
                 this.shootCadencyAux = 0;
 
                 audio.shoot.play();
-                audio.shoot.loop = true;
                
           
             }

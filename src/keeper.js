@@ -17,6 +17,7 @@ class Keeper extends GameObject {
         this.startSin = 0;
         this.startCos = 0;
 
+        this.vel = -1;
         this.life = 4;
     }
 
@@ -40,7 +41,7 @@ class Keeper extends GameObject {
         this.startSin +=deltaTime;
         this.startCos +=deltaTime;
         
-        let movementVector = new b2Vec2(-Math.cos(this.startCos * 3.5) - 0.5, Math.sin(this.startSin * 2.5));
+        let movementVector = new b2Vec2((-Math.cos(this.startCos * 3.5) - 0.5)*this.vel, this.vel*Math.sin(this.startSin * 2.5));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
         
@@ -53,6 +54,8 @@ class Keeper extends GameObject {
             //this.Shoot();
         //}
         
+        if(this.position.x < 200) this.vel = -1;
+        if (this.position.X > 900) this.vel = 1;
 
         if(this.life <= 0)          this.Die();
 
