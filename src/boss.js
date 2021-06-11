@@ -32,8 +32,8 @@ class Boss extends GameObject {
     {
         super.Start(scene);
       
-        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, 
-            {fixedRotation: true, restitution: 0.5, linearDamping: 8}, this);
+        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.6, 0.6, 
+            {isSensor: true, fixedRotation: true, restitution: 0.5, linearDamping: 8}, this);
         this.body.SetUserData('fly');
 
     }
@@ -75,7 +75,7 @@ class Boss extends GameObject {
 
         
             ctx.translate(this.position.x, this.position.y);
-            ctx.scale(2, 2);
+            ctx.scale(3, 3);
         
         ctx.rotate(this.rotation);
 
