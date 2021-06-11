@@ -65,6 +65,10 @@ var graphicAssets = {
         path: "assets/deathnote.png",
         image: null
     },
+    win: {
+        path: "assets/final.png",
+        image: null
+    },
     boss: {
         path: "assets/boss.png",
         image: null
@@ -238,6 +242,8 @@ function Draw(ctx)
 
 function InitScene()
 {
+    playerLife = 0;
+invulnerability = false;
     currentScene = new GameScene();
     currentScene.Start();
 }

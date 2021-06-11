@@ -265,8 +265,8 @@ function OnContactDetected(contact)
 
     if (userDataA != null && userDataB != null)
     {        
-        if (((userDataA === "player" && userDataB === "fly") 
-        || (userDataA === "fly" && userDataB === "player")) 
+        if (((userDataA === "player" && (userDataB === "fly" || userDataB === "boss")) 
+        || (userDataA === "fly" && (userDataB === "player" || userDataB === "boss"))) 
         && !invulnerability)
         {
             ++playerLife;
@@ -283,6 +283,13 @@ function OnContactDetected(contact)
             
         else if (userDataA === "fly" && userDataB === "bullet") {
           contact.GetFixtureA().GetBody().gameobject.life--;
+        }
+
+
+        if ((userDataA === "bullet" && userDataB === "boss") 
+        || (userDataA === "boss" && userDataB === "bullet")) 
+        {
+            --bossLife;
         }
 
     }

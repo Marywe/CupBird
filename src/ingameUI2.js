@@ -69,4 +69,18 @@ class ingameUI2 {
         this.goToMainMenuButton.Draw(ctx);
     }
 
+
+    DrawWin(ctx)
+    {
+        ctx.fillStyle = "black";
+        
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(graphicAssets.win.image, canvasHalfWidth - (graphicAssets.death.image.width/2),
+         canvasHalfHeight - (graphicAssets.death.image.width/2));
+
+        // Reset button
+        this.reiniciarButton.Draw(ctx);
+        this.goToMainMenuButton.Draw(ctx);
+    }
+
 }

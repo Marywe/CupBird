@@ -38,7 +38,7 @@ class Boss extends GameObject {
       
         this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.6, 0.6, 
             {isSensor: true, fixedRotation: true, restitution: 0.5, linearDamping: 8}, this);
-        this.body.SetUserData('fly');
+        this.body.SetUserData('boss');
 
     }
 

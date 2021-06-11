@@ -1,6 +1,7 @@
 var playerLife = 0;
 var invulnerability = false;
 
+var bossLife = 3;
 class GameScene extends Scene {
 
     constructor()
@@ -81,10 +82,16 @@ class GameScene extends Scene {
                 this.world.Step(deltaTime, 8, 3);
                 this.world.ClearForces();
 
+                if(bossLife<=0){
+                    bossLife=40;
+                    playerLife=0;
+                    this.currentState = SceneState.Win;
+                }
                  // check scene ended condition
                 if (playerLife >= this.player.maxLife)
                 {
-                   
+                    bossLife=40;
+                    playerLife=0;
                     this.currentState = SceneState.GameOver;
       
                     
@@ -129,6 +136,9 @@ class GameScene extends Scene {
             case SceneState.GameOver:
                 this.ui.UpdateEnd(deltaTime);
                 break;
+            case SceneState.Win:
+                this.ui.UpdateEnd(deltaTime);
+                break;
         }
     }
 
@@ -165,9 +175,15 @@ class GameScene extends Scene {
             case SceneState.GameOver:
                 super.Draw(ctx);
 
-                this.background.Draw(ctx);
-
+               
                 this.ui.DrawEnd(ctx);
+                break;
+            case SceneState.Win:
+                super.Draw(ctx);
+
+            
+
+                this.ui.DrawWin(ctx);
                 break;
         }
     }
