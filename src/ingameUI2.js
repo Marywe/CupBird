@@ -52,7 +52,13 @@ class ingameUI2 {
         // Life
         const currentLife = (10 - playerLife) / 10;
         ctx.strokeStyle = "black";
+
+        if(playerLife < 5)
         ctx.fillStyle = "lightGreen";
+        else if(playerLife < 8)
+        ctx.fillStyle = "yellow";
+        else ctx.fillStyle = "red";
+
 
        
         ctx.fillRect(400, 20, 200 * currentLife, 20);
@@ -61,7 +67,7 @@ class ingameUI2 {
 
 
         // Life
-        const bossessito = bossLife / 40;
+        const bossessito = bossLife / 60;
         ctx.strokeStyle = "black";
 
 

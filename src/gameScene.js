@@ -1,7 +1,7 @@
 var playerLife = 0;
 var invulnerability = false;
 
-var bossLife = 40;
+var bossLife = 60;
 class GameScene extends Scene {
 
     constructor()
@@ -39,7 +39,7 @@ class GameScene extends Scene {
         this.AddGameObject(this.player);
 
        
-        this.keep = new Keeper(new Vector2(100,200), 0);
+        this.keep = new Keeper(new Vector2(900,300), 0);
         this.keep.Start(this);
         this.keep.active = true;
 
@@ -86,14 +86,14 @@ class GameScene extends Scene {
 
 
                 if(bossLife<=0){
-                    bossLife=40;
+                    bossLife=60;
                     playerLife=0;
                     this.currentState = SceneState.Win;
                 }
                  // check scene ended condition
                 if (playerLife >= this.player.maxLife)
                 {
-                    bossLife=40;
+                    bossLife=60;
                     playerLife=0;
                     this.currentState = SceneState.GameOver;
       
@@ -171,7 +171,7 @@ class GameScene extends Scene {
 
                 ctx.font = "120px sans-serif";
                 ctx.textAlign = 'center';
-                ctx.fillText('PAUSE', 240, 400);
+                ctx.fillText('PAUSE', canvasHalfWidth, canvasHalfHeight);
                 ctx.textAlign = 'center';
                 break;
 

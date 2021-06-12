@@ -25,7 +25,7 @@ class Boss extends GameObject {
         this.startPos = new b2Vec2(0, 0)
         this.startSin = 0;
 
-        this.life = 40;
+        this.life = 60;
 
         this.spawn = true;
         this.counterSpawn = 0;
@@ -80,7 +80,13 @@ class Boss extends GameObject {
     }
     
 
-        if(this.counterSpawn >= Math.random() * (7 - 4) + 4)
+        if(bossLife > 30 && (this.counterSpawn >= Math.random() * (7 - 4) + 4))
+        {
+            this.Spawn();
+            this.counterSpawn = 0;  
+            this.spawn=false;  
+        }
+        else if (bossLife <= 30 && (this.counterSpawn >= Math.random() * (4 - 2.5) + 2.5))
         {
             this.Spawn();
             this.counterSpawn = 0;  
@@ -125,7 +131,7 @@ class Boss extends GameObject {
     Spawn(){
 
         var randomSpawn = Math.floor(Math.random() * 2);
-        var randomPos = Math.random() * (100 - -100) + -100
+        var randomPos = Math.random() * (300 - -300) + -300
         switch(randomSpawn){
             case 0:
                 this.lilfly = new LilFly(new Vector2(this.position.x, canvas.height- this.position.y + randomPos), 0);

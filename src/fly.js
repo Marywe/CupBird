@@ -13,7 +13,7 @@ class Fly extends GameObject {
             1/12 // frameCount
         );
         
-        this.animation.PlayAnimationLoop(1);
+        this.animation.PlayAnimationLoop(0);
 
         // physic body
         this.body = null;
@@ -49,7 +49,7 @@ class Fly extends GameObject {
         // update the position
         this.startSin +=deltaTime;
         
-        let movementVector = new b2Vec2(-1.3 * this.vel, this.vel*Math.sin(this.startSin * 2.5));
+        let movementVector = new b2Vec2(-1.3 * this.vel, (Math.random() * (1 - -1) + -1) + this.vel*Math.sin(this.startSin * 2.5));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
         
@@ -58,7 +58,7 @@ class Fly extends GameObject {
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
 
         
-        if(this.position.x < 250) this.vel = -1;
+        if(this.position.x < 100) this.vel = -1;
         if (this.position.X > 900) this.vel = 1;
         
         if(this.life <= 0)          this.Die();
