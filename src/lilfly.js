@@ -23,7 +23,7 @@ class LilFly extends GameObject {
     {
         super.Start(scene);
 
-        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.27, 0.2, {fixedRotation: true, restitution: 0.5, linearDamping: 8}, this);
+        this.body = CreateBox(world,this.position.x / scale , this.position.y / scale, 0.2, 0.15, {fixedRotation: true, restitution: 0.5, linearDamping: 8}, this);
         this.body.SetUserData('fly');
     }
 
@@ -44,7 +44,7 @@ class LilFly extends GameObject {
         this.position.y = Math.abs((bodyPosition.y * scale) - ctx.canvas.height);
 
         if(this.position.x < 100) this.vel = 1.3;
-        if (this.position.X > 900) this.vel = -1.3;
+        if (this.position.x > 900) this.vel = -1.3;
         
 
         if(this.life <= 0)          this.Die();

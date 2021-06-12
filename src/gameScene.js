@@ -66,7 +66,7 @@ class GameScene extends Scene {
 
         CreateEdge(this.world, 5,6, -4, 0, 10, 0, {type : b2Body.b2_staticBody});
 
-        this.invulTime = 2.5;
+        this.invulTime = 0.6;
         
        
     }
@@ -211,7 +211,4 @@ class GameScene extends Scene {
         ShowMainMenuAgain();
     }
 
-    Spawn(){
-        
-    }
 }

@@ -245,7 +245,7 @@ function Draw(ctx)
 function InitScene()
 {
     playerLife = 0;
-invulnerability = false;
+    invulnerability = false;
     currentScene = new GameScene();
     currentScene.Start();
 }

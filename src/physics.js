@@ -248,7 +248,7 @@ function DrawWorldDebug(ctx)
     ctx.save();
     ctx.translate(0, canvas.height);
     ctx.scale(1, -1);
-    world.DrawDebugData(); //QUITAR
+    //world.DrawDebugData(); //QUITAR
     ctx.restore();
 }
 

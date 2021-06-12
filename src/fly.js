@@ -47,9 +47,9 @@ class Fly extends GameObject {
         this.shootCadencyAux += deltaTime;
 
         // update the position
-        this.startSin +=deltaTime;
-        
-        let movementVector = new b2Vec2(-1.3 * this.vel, (Math.random() * (1 - -1) + -1) + this.vel*Math.sin(this.startSin * 2.5));
+        this.startSin +=deltaTime;        
+        let movementVector = new b2Vec2(-1.5 * this.vel, 
+            (Math.random() * (1 - -1) + -1) + this.vel*Math.sin(this.startSin * 2.5));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
         
@@ -59,7 +59,7 @@ class Fly extends GameObject {
 
         
         if(this.position.x < 100) this.vel = -1;
-        if (this.position.X > 900) this.vel = 1;
+        if (this.position.x > 900) this.vel = 1;
         
         if(this.life <= 0)          this.Die();
 

@@ -23,7 +23,7 @@ class Boss extends GameObject {
         this.bulletSpawnPoint = new Vector2(0, 0);
         this.bullets = [];
         this.startPos = new b2Vec2(0, 0)
-        this.startSin = 0;
+        this.angle = 0;
 
         this.life = 60;
 
@@ -48,11 +48,10 @@ class Boss extends GameObject {
         this.animation.Update(deltaTime);
         
         // update the position
-        this.startSin +=deltaTime;
-        
-        //let movementVector = new b2Vec2(-1.3, Math.sin(this.startSin * 2.5));
-        let movementVector = new b2Vec2(2.2*Math.cos(this.startSin) - 2.2*Math.sin(this.startSin),
-                                     2.2*Math.sin(this.startSin)+ 2.2*Math.cos(this.startSin));
+        this.angle +=deltaTime;
+
+        let movementVector = new b2Vec2(2.2*Math.cos(this.angle) - 2.2*Math.sin(this.angle),
+                                     2.2*Math.sin(this.angle)+ 2.2*Math.cos(this.angle));
 
         this.body.ApplyForce(movementVector, new b2Vec2(0, 0));
         
