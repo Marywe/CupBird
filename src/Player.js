@@ -15,7 +15,7 @@ class Player extends GameObject {
         // maximun displacement velocity
         this.maxVelocity = 2.5;
 
-        this.shootCadency = 0.4;
+        this.shootCadency = 0.55;
         this.shootCadencyAux = this.shootCadency;
         this.bulletSpawnPoint = new Vector2(0, 0);
         this.bullets = [];

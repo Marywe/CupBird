@@ -80,13 +80,13 @@ class Boss extends GameObject {
     }
     
 
-        if(bossLife > 30 && (this.counterSpawn >= Math.random() * (7 - 4) + 4))
+        if(bossLife > 30 && (this.counterSpawn >= Math.random() * (6 - 3) + 3))
         {
             this.Spawn();
             this.counterSpawn = 0;  
             this.spawn=false;  
         }
-        else if (bossLife <= 30 && (this.counterSpawn >= Math.random() * (4 - 2.5) + 2.5))
+        else if (bossLife <= 30 && (this.counterSpawn >= Math.random() * (4 - 2) + 2))
         {
             this.Spawn();
             this.counterSpawn = 0;  

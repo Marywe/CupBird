@@ -39,14 +39,14 @@ class GameScene extends Scene {
         this.AddGameObject(this.player);
 
        
-        this.keep = new Keeper(new Vector2(900,300), 0);
+        this.keep = new Keeper(new Vector2(950,300), 0);
         this.keep.Start(this);
         this.keep.active = true;
 
         this.AddGameObject(this.keep);
 
 
-        this.boss = new Boss(new Vector2(750,340), 0);
+        this.boss = new Boss(new Vector2(800,320), 0);
         this.boss.Start(this);
         this.boss.active = true;
 
@@ -99,6 +99,16 @@ class GameScene extends Scene {
       
                     
                 }
+
+
+                if(!this.keep.active){
+                    this.keep = new Keeper(new Vector2(950,300), 0)
+                    this.keep.Start(this);
+                    this.keep.active = true;
+                    this.AddGameObject(this.keep);
+
+                }
+
 
                 if (Input.IsKeyUp(KEY_PAUSE) || Input.IsKeyUp(KEY_ESCAPE))
                 {
